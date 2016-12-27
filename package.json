@@ -1,6 +1,6 @@
 {
   "name": "create-plunker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A helper utility to create plunkers",
   "main": "dist/umd/createPlunker.js",
   "typings": "dist/umd/src/createPlunker.d.ts",
