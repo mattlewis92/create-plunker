@@ -8,6 +8,11 @@ interface Field {
   value: string;
 }
 
+export interface NpmPackageArgs {
+  version?: string;
+  filename?: string;
+}
+
 export const PLUNKER_FORM_URL: string = 'http://plnkr.co/edit/?p=preview';
 
 const CDN_BASE: string = 'https://unpkg.com/';
@@ -47,6 +52,26 @@ export class Plunker {
 
   addFiles(files: File[]): Plunker {
     files.forEach(file => this.addFile(file));
+    return this;
+  }
+
+  addIndexHtmlAttribute(name: string, value: string): Plunker {
+    this.indexFile.addHtmlAttribute(name, value);
+    return this;
+  }
+
+  addIndexBodyAttribute(name: string, value: string): Plunker {
+    this.indexFile.addBodyAttribute(name, value);
+    return this;
+  }
+
+  addNpmPackage(packageName: string, {version, filename}: NpmPackageArgs = {}): Plunker {
+    this.indexFile.addNpmPackage(packageName, {version, filename});
+    return this;
+  }
+
+  setIndexBody(body: string): Plunker {
+    this.indexFile.setBody(body);
     return this;
   }
 
@@ -121,7 +146,7 @@ export class HtmlFile {
     return this.addHeadLine(`<link href="${src}" rel="stylesheet">`);
   }
 
-  addNpmPackage(packageName: string, {version, filename}: {version?: string, filename?: string} = {}): HtmlFile {
+  addNpmPackage(packageName: string, {version, filename}: NpmPackageArgs = {}): HtmlFile {
     let url: string = `${CDN_BASE}${packageName}`;
     if (version) {
       url += `@${version}`;

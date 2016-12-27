@@ -108,44 +108,37 @@ describe('createPlunker', () => {
   });
 
   it('should add attributes to the html index file', () => {
-    const plunker: Plunker = Plunker.create();
-    plunker.indexFile.addHtmlAttribute('foo', 'bar');
+    const plunker: Plunker = Plunker.create().addIndexHtmlAttribute('foo', 'bar');
     expect(plunker.indexFile.getHtml().includes('<html foo="bar">')).to.be.true;
   });
 
   it('should add attributes to the html index file body', () => {
-    const plunker: Plunker = Plunker.create();
-    plunker.indexFile.addBodyAttribute('foo', 'bar');
+    const plunker: Plunker = Plunker.create().addIndexBodyAttribute('foo', 'bar');
     expect(plunker.indexFile.getHtml().includes('<body foo="bar">')).to.be.true;
   });
 
   it('should set the body of the html', () => {
-    const plunker: Plunker = Plunker.create();
-    plunker.indexFile.setBody('<div>foo</div>');
+    const plunker: Plunker = Plunker.create().setIndexBody('<div>foo</div>');
     expect(plunker.indexFile.getHtml().includes('<body >\n    <div>foo</div>\n  </body>')).to.be.true;
   });
 
   it('should add an npm package pointing to its default export', () => {
-    const plunker: Plunker = Plunker.create();
-    plunker.indexFile.addNpmPackage('angular-calendar');
+    const plunker: Plunker = Plunker.create().addNpmPackage('angular-calendar');
     expect(plunker.indexFile.getHtml().includes('<script src="https://unpkg.com/angular-calendar"></script>')).to.be.true;
   });
 
   it('should add an npm package pointing to a specific version of its default export', () => {
-    const plunker: Plunker = Plunker.create();
-    plunker.indexFile.addNpmPackage('angular-calendar', {version: '0.5.0'});
+    const plunker: Plunker = Plunker.create().addNpmPackage('angular-calendar', {version: '0.5.0'});
     expect(plunker.indexFile.getHtml().includes('<script src="https://unpkg.com/angular-calendar@0.5.0"></script>')).to.be.true;
   });
 
   it('should add an npm package pointing to a specific version of a specific file', () => {
-    const plunker: Plunker = Plunker.create();
-    plunker.indexFile.addNpmPackage('angular-calendar', {version: '0.5.0', filename: 'foo.js'});
+    const plunker: Plunker = Plunker.create().addNpmPackage('angular-calendar', {version: '0.5.0', filename: 'foo.js'});
     expect(plunker.indexFile.getHtml().includes('<script src="https://unpkg.com/angular-calendar@0.5.0/foo.js"></script>')).to.be.true;
   });
 
   it('should add an npm package pointing to a stylesheet', () => {
-    const plunker: Plunker = Plunker.create();
-    plunker.indexFile.addNpmPackage('angular-calendar', {filename: 'dist/css/angular-calendar.css'});
+    const plunker: Plunker = Plunker.create().addNpmPackage('angular-calendar', {filename: 'dist/css/angular-calendar.css'});
     expect(plunker.indexFile.getHtml().includes('<link href="https://unpkg.com/angular-calendar/dist' +
       '/css/angular-calendar.css" rel="stylesheet">')).to.be.true;
   });
