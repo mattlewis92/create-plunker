@@ -143,4 +143,26 @@ describe('createPlunker', () => {
       '/css/angular-calendar.css" rel="stylesheet">')).to.be.true;
   });
 
+  it('should add a document title', () => {
+    const plunker: Plunker = Plunker.create().addIndexHeadLine('<title>foo</title>');
+    expect(plunker.indexFile.getHtml().includes('<title>foo</title>')).to.be.true;
+  });
+
+  it('should add an inline script', () => {
+    const plunker: Plunker = Plunker.create().addInlineScript('alert("foo");');
+    expect(plunker.indexFile.getHtml()).to.equal(`
+<!doctype html>
+<html >
+  <head>
+    <script>
+    alert("foo");
+    </script>
+  </head>
+  <body >
+    
+  </body>
+</html>
+`.trim());
+  });
+
 });

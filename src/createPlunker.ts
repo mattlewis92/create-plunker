@@ -65,6 +65,16 @@ export class Plunker {
     return this;
   }
 
+  addIndexHeadLine(line: string): Plunker {
+    this.indexFile.addHeadLine(line);
+    return this;
+  }
+
+  addInlineScript(source: string): Plunker {
+    this.indexFile.addInlineScript(source);
+    return this;
+  }
+
   addNpmPackage(packageName: string, {version, filename}: NpmPackageArgs = {}): Plunker {
     this.indexFile.addNpmPackage(packageName, {version, filename});
     return this;
@@ -138,12 +148,16 @@ export class HtmlFile {
     return this;
   }
 
-  addScriptFile(src: string): HtmlFile {
-    return this.addHeadLine(`<script src="${src}"></script>`);
+  addScriptFile(url: string): HtmlFile {
+    return this.addHeadLine(`<script src="${url}"></script>`);
   }
 
-  addStylesheetFile(src: string): HtmlFile {
-    return this.addHeadLine(`<link href="${src}" rel="stylesheet">`);
+  addStylesheetFile(url: string): HtmlFile {
+    return this.addHeadLine(`<link href="${url}" rel="stylesheet">`);
+  }
+
+  addInlineScript(source: string): HtmlFile {
+    return this.addHeadLine(`<script>\n    ${source}\n    </script>`);
   }
 
   addNpmPackage(packageName: string, {version, filename}: NpmPackageArgs = {}): HtmlFile {
