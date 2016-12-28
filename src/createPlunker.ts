@@ -40,18 +40,18 @@ export class Plunker {
     return this;
   }
 
-  addFile(file: File): Plunker {
+  addFile(file: File, skipAddToIndex: boolean = false): Plunker {
     this.fields.push({name: `files[${file.name}]`, value: file.contents});
-    if (isCssFile(file.name)) {
+    if (isCssFile(file.name) && !skipAddToIndex) {
       this.indexFile.addStylesheetFile(file.name);
-    } else if (isJsFile(file.name)) {
+    } else if (isJsFile(file.name) && !skipAddToIndex) {
       this.indexFile.addScriptFile(file.name);
     }
     return this;
   }
 
-  addFiles(files: File[]): Plunker {
-    files.forEach(file => this.addFile(file));
+  addFiles(files: File[], skipAddToIndex: boolean = false): Plunker {
+    files.forEach(file => this.addFile(file, skipAddToIndex));
     return this;
   }
 

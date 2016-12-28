@@ -79,6 +79,16 @@ describe('createPlunker', () => {
     return handler;
   });
 
+  it('should add js files but not to the index', () => {
+    const handler: Promise<any> = formHandler(form => {
+      expect(form.querySelector('input[name="files[index.html]"]').getAttribute('value')
+        .includes('<script src="foo.js"></script>')).to.be.false;
+      expect(form.querySelector('input[name="files[foo.js]"]').getAttribute('value')).to.equal('foo');
+    });
+    Plunker.create().addFiles([{name: 'foo.js', contents: 'foo'}], true).save();
+    return handler;
+  });
+
   it('should add css files', () => {
     const handler: Promise<any> = formHandler(form => {
       expect(form.querySelector('input[name="files[index.html]"]').getAttribute('value')
@@ -86,6 +96,16 @@ describe('createPlunker', () => {
       expect(form.querySelector('input[name="files[foo.css]"]').getAttribute('value')).to.equal('foo');
     });
     Plunker.create().addFiles([{name: 'foo.css', contents: 'foo'}]).save();
+    return handler;
+  });
+
+  it('should add css files but not to the index', () => {
+    const handler: Promise<any> = formHandler(form => {
+      expect(form.querySelector('input[name="files[index.html]"]').getAttribute('value')
+        .includes('<link href="foo.css" rel="stylesheet">')).to.be.false;
+      expect(form.querySelector('input[name="files[foo.css]"]').getAttribute('value')).to.equal('foo');
+    });
+    Plunker.create().addFiles([{name: 'foo.css', contents: 'foo'}], true).save();
     return handler;
   });
 
