@@ -120,7 +120,11 @@ export class Plunker {
 }
 
 function stringifyAttributes(attributes: Field[]): string {
-  return attributes.map(({name, value}) => `${name}="${value}"`).join(' ');
+  const attributesString: string = attributes.map(({name, value}) => `${name}="${value}"`).join(' ');
+  if (attributesString) {
+    return ` ${attributesString}`;
+  }
+  return attributesString;
 }
 
 export class HtmlFile {
@@ -185,11 +189,11 @@ export class HtmlFile {
     return `
     
 <!doctype html>
-<html ${stringifyAttributes(this.htmlAttributes)}>
+<html${stringifyAttributes(this.htmlAttributes)}>
   <head>
     ${this.headLines.join('\n    ')}
   </head>
-  <body ${stringifyAttributes(this.bodyAttributes)}>
+  <body${stringifyAttributes(this.bodyAttributes)}>
     ${this.body}
   </body>
 </html>

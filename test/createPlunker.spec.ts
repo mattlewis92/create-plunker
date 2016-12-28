@@ -95,12 +95,12 @@ describe('createPlunker', () => {
     plunker.indexFile.addHeadLine('<script src="bar.js"></script>');
     expect(plunker.indexFile.getHtml()).to.equal(`
 <!doctype html>
-<html >
+<html>
   <head>
     <script src="foo.js"></script>
     <script src="bar.js"></script>
   </head>
-  <body >
+  <body>
     
   </body>
 </html>
@@ -119,7 +119,7 @@ describe('createPlunker', () => {
 
   it('should set the body of the html', () => {
     const plunker: Plunker = Plunker.create().setIndexBody('<div>foo</div>');
-    expect(plunker.indexFile.getHtml().includes('<body >\n    <div>foo</div>\n  </body>')).to.be.true;
+    expect(plunker.indexFile.getHtml().includes('<body>\n    <div>foo</div>\n  </body>')).to.be.true;
   });
 
   it('should add an npm package pointing to its default export', () => {
@@ -152,13 +152,13 @@ describe('createPlunker', () => {
     const plunker: Plunker = Plunker.create().addInlineScript('alert("foo");');
     expect(plunker.indexFile.getHtml()).to.equal(`
 <!doctype html>
-<html >
+<html>
   <head>
     <script>
     alert("foo");
     </script>
   </head>
-  <body >
+  <body>
     
   </body>
 </html>
