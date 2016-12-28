@@ -188,7 +188,7 @@ export class HtmlFile {
 
     return `
     
-<!doctype html>
+<!DOCTYPE html>
 <html${stringifyAttributes(this.htmlAttributes)}>
   <head>
     ${this.headLines.join('\n    ')}

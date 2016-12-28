@@ -94,7 +94,7 @@ describe('createPlunker', () => {
     plunker.indexFile.addHeadLine('<script src="foo.js"></script>');
     plunker.indexFile.addHeadLine('<script src="bar.js"></script>');
     expect(plunker.indexFile.getHtml()).to.equal(`
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <script src="foo.js"></script>
@@ -151,7 +151,7 @@ describe('createPlunker', () => {
   it('should add an inline script', () => {
     const plunker: Plunker = Plunker.create().addInlineScript('alert("foo");');
     expect(plunker.indexFile.getHtml()).to.equal(`
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <script>
