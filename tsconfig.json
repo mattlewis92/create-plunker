@@ -5,7 +5,8 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "removeComments": false,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "strictNullChecks": false,
     "declaration": true,
     "outDir": "dist",
     "lib": ["dom", "es2015"]

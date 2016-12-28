@@ -6,7 +6,7 @@ import {Plunker, PLUNKER_FORM_URL} from '../src/createPlunker';
 
 describe('createPlunker', () => {
 
-  let eventListener: EventListenerOrEventListenerObject;
+  let eventListener: EventListenerOrEventListenerObject | null;
 
   function formHandler(fn: any): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -36,7 +36,7 @@ describe('createPlunker', () => {
   });
 
   it('should set the plunker form data', () => {
-    const handler: Promise<any> = formHandler(form => {
+    const handler: Promise<any> = formHandler((form: HTMLFormElement) => {
       expect(getComputedStyle(form).display).to.equal('none');
       expect(form.getAttribute('method')).to.equal('post');
       expect(form.getAttribute('action')).to.equal(PLUNKER_FORM_URL);
@@ -47,7 +47,7 @@ describe('createPlunker', () => {
   });
 
   it('should not open the plunker in a new tab', () => {
-    const handler: Promise<any> = formHandler(form => {
+    const handler: Promise<any> = formHandler((form: HTMLFormElement) => {
       expect(form.getAttribute('target')).not.to.be.ok;
     });
     Plunker.create().save(false);
@@ -55,7 +55,7 @@ describe('createPlunker', () => {
   });
 
   it('should set the plunker description', () => {
-    const handler: Promise<any> = formHandler(form => {
+    const handler: Promise<any> = formHandler((form: HTMLFormElement) => {
       expect(form.querySelector('input[name=description]').getAttribute('value')).to.equal('foo');
     });
     Plunker.create().setDescription('foo').save();
@@ -63,7 +63,7 @@ describe('createPlunker', () => {
   });
 
   it('should add local files to the plunker', () => {
-    const handler: Promise<any> = formHandler(form => {
+    const handler: Promise<any> = formHandler((form: HTMLFormElement) => {
       expect(form.querySelector('input[name="files[foo.txt]"]').getAttribute('value')).to.equal('foo');
     });
     Plunker.create().addFiles([{name: 'foo.txt', contents: 'foo'}]).save();
@@ -72,7 +72,7 @@ describe('createPlunker', () => {
 
   it('should add the index.html', () => {
     const plunker: Plunker = Plunker.create();
-    const handler: Promise<any> = formHandler(form => {
+    const handler: Promise<any> = formHandler((form: HTMLFormElement) => {
       expect(form.querySelector('input[name="files[index.html]"]').getAttribute('value')).to.equal(plunker.indexFile.getHtml());
     });
     plunker.save();
@@ -80,7 +80,7 @@ describe('createPlunker', () => {
   });
 
   it('should add js files', () => {
-    const handler: Promise<any> = formHandler(form => {
+    const handler: Promise<any> = formHandler((form: HTMLFormElement) => {
       expect(form.querySelector('input[name="files[index.html]"]').getAttribute('value')
         .includes('<script src="foo.js"></script>')).to.be.true;
       expect(form.querySelector('input[name="files[foo.js]"]').getAttribute('value')).to.equal('foo');
@@ -90,7 +90,7 @@ describe('createPlunker', () => {
   });
 
   it('should add js files but not to the index', () => {
-    const handler: Promise<any> = formHandler(form => {
+    const handler: Promise<any> = formHandler((form: HTMLFormElement) => {
       expect(form.querySelector('input[name="files[index.html]"]').getAttribute('value')
         .includes('<script src="foo.js"></script>')).to.be.false;
       expect(form.querySelector('input[name="files[foo.js]"]').getAttribute('value')).to.equal('foo');
@@ -100,7 +100,7 @@ describe('createPlunker', () => {
   });
 
   it('should add css files', () => {
-    const handler: Promise<any> = formHandler(form => {
+    const handler: Promise<any> = formHandler((form: HTMLFormElement) => {
       expect(form.querySelector('input[name="files[index.html]"]').getAttribute('value')
         .includes('<link href="foo.css" rel="stylesheet">')).to.be.true;
       expect(form.querySelector('input[name="files[foo.css]"]').getAttribute('value')).to.equal('foo');
@@ -110,7 +110,7 @@ describe('createPlunker', () => {
   });
 
   it('should add css files but not to the index', () => {
-    const handler: Promise<any> = formHandler(form => {
+    const handler: Promise<any> = formHandler((form: HTMLFormElement) => {
       expect(form.querySelector('input[name="files[index.html]"]').getAttribute('value')
         .includes('<link href="foo.css" rel="stylesheet">')).to.be.false;
       expect(form.querySelector('input[name="files[foo.css]"]').getAttribute('value')).to.equal('foo');
