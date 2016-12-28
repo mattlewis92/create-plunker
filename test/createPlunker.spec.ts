@@ -6,6 +6,8 @@ import {Plunker, PLUNKER_FORM_URL} from '../src/createPlunker';
 
 describe('createPlunker', () => {
 
+  let eventListener: EventListenerOrEventListenerObject;
+
   function formHandler(fn: any): Promise<any> {
     return new Promise((resolve, reject) => {
 
@@ -22,8 +24,16 @@ describe('createPlunker', () => {
       }
 
       document.addEventListener('submit', handleSubmitEvent);
+      eventListener = handleSubmitEvent;
     });
   }
+
+  afterEach(() => {
+    if (eventListener) {
+      document.removeEventListener('submit', eventListener);
+      eventListener = null;
+    }
+  });
 
   it('should set the plunker form data', () => {
     const handler: Promise<any> = formHandler(form => {
