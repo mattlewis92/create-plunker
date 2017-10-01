@@ -12,3 +12,5 @@ Plunker.create()
   .setIndexBody('Hello world!')
   .save();
 ```
+
+For a full list of API docs see [here](https://mattlewis92.github.io/create-plunker/docs/classes/_src_createplunker_.plunker.html) and for more example usage [see the tests](https://github.com/mattlewis92/create-plunker/blob/master/test/createPlunker.spec.ts).
