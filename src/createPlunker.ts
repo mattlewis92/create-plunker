@@ -29,17 +29,32 @@ export class Plunker {
 
   private fields: Field[] = [];
 
+  /**
+   * Static factory method to create a new plunker
+   * @returns {Plunker}
+   */
   static create(): Plunker {
     return new Plunker(new HtmlFile());
   }
 
   constructor(public indexFile: HtmlFile) {}
 
+  /**
+   * Sets the description of the plunker
+   * @param {string} description
+   * @returns {Plunker}
+   */
   setDescription(description: string): Plunker {
     this.fields.push({name: 'description', value: description});
     return this;
   }
 
+  /**
+   * Add a file to the plunker. By default will add a reference to js / css files to the index.html
+   * @param {File} file
+   * @param {boolean} skipAddToIndex
+   * @returns {Plunker}
+   */
   addFile(file: File, skipAddToIndex: boolean = false): Plunker {
     this.fields.push({name: `files[${file.name}]`, value: file.contents});
     if (isCssFile(file.name) && !skipAddToIndex) {
@@ -50,41 +65,85 @@ export class Plunker {
     return this;
   }
 
+  /**
+   * Add multiple files to the plunker
+   * @param {File[]} files
+   * @param {boolean} skipAddToIndex
+   * @returns {Plunker}
+   */
   addFiles(files: File[], skipAddToIndex: boolean = false): Plunker {
     files.forEach(file => this.addFile(file, skipAddToIndex));
     return this;
   }
 
+  /**
+   * Adds an attribute to the html tag of the index.html file
+   * @param {string} name
+   * @param {string} value
+   * @returns {Plunker}
+   */
   addIndexHtmlAttribute(name: string, value: string): Plunker {
     this.indexFile.addHtmlAttribute(name, value);
     return this;
   }
 
+  /**
+   * Adds an attrbiute to the body tag of the index.html file
+   * @param {string} name
+   * @param {string} value
+   * @returns {Plunker}
+   */
   addIndexBodyAttribute(name: string, value: string): Plunker {
     this.indexFile.addBodyAttribute(name, value);
     return this;
   }
 
+  /**
+   * Add a line to the head tag of the index.html file
+   * @param {string} line
+   * @returns {Plunker}
+   */
   addIndexHeadLine(line: string): Plunker {
     this.indexFile.addHeadLine(line);
     return this;
   }
 
+  /**
+   * Add an inline script to the index.html file
+   * @param {string} source
+   * @returns {Plunker}
+   */
   addInlineScript(source: string): Plunker {
     this.indexFile.addInlineScript(source);
     return this;
   }
 
+  /**
+   * Add an npm package to the plunker. Will be hosted with https://unpkg.com/
+   * @param {string} packageName
+   * @param {any} version
+   * @param {any} filename
+   * @returns {Plunker}
+   */
   addNpmPackage(packageName: string, {version, filename}: NpmPackageArgs = {}): Plunker {
     this.indexFile.addNpmPackage(packageName, {version, filename});
     return this;
   }
 
+  /**
+   * Sets the body of the index.html file
+   * @param {string} body
+   * @returns {Plunker}
+   */
   setIndexBody(body: string): Plunker {
     this.indexFile.setBody(body);
     return this;
   }
 
+  /**
+   * Generates the plunker and by default opens the url for it in a new tab
+   * @param {boolean} openInNewTab
+   */
   save(openInNewTab: boolean = true): void {
 
     const form: HTMLFormElement = document.createElement('form');
