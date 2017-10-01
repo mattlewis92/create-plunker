@@ -14,7 +14,8 @@
     "build": "webpack",
     "clean": "rm -rf dist",
     "preversion": "npm test",
-    "postversion": "npm run build && git push && npm publish && npm run clean"
+    "postversion": "npm run build && git push && npm publish && npm run clean",
+    "typedoc": "typedoc --out docs/ ."
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,7 @@
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "tslint-loader": "^3.3.0",
+    "typedoc": "^0.8.0",
     "typescript": "~2.5.3",
     "webpack": "^3.6.0"
   }
