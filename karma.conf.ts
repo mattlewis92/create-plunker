@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const WATCH = process.argv.indexOf('--watch') > -1;
 
-module.exports = function(config) {
+module.exports = function(config: any) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -14,10 +14,6 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'test/createPlunker.spec.ts'
-    ],
-
-    // list of files to exclude
-    exclude: [
     ],
 
     // preprocess matching files before serving them to the browser
@@ -36,7 +32,11 @@ module.exports = function(config) {
           test: /\.ts$/,
           loader: 'tslint-loader',
           exclude: /node_modules/,
-          enforce: 'pre'
+          enforce: 'pre',
+          options: {
+            emitErrors: !WATCH,
+            failOnHint: !WATCH
+          }
         }, {
           test: /\.ts$/,
           loader: 'awesome-typescript-loader',
@@ -50,20 +50,9 @@ module.exports = function(config) {
       },
       plugins: [
         ...(WATCH ? [] : [
-          new webpack.NoErrorsPlugin()
-        ]),
-        new webpack.LoaderOptionsPlugin({
-          options: {
-            tslint: {
-              emitErrors: !WATCH,
-              failOnHint: false
-            }
-          }
-        })
-      ],
-      performance: {
-        hints: false
-      }
+          new webpack.NoEmitOnErrorsPlugin()
+        ])
+      ]
     },
 
     remapIstanbulReporter: {
@@ -77,12 +66,6 @@ module.exports = function(config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'karma-remap-istanbul'],
-
-    // web server port
-    port: 9876,
-
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
