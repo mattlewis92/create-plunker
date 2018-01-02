@@ -13,7 +13,7 @@ export interface NpmPackageArgs {
   filename?: string;
 }
 
-export const PLUNKER_FORM_URL: string = 'http://plnkr.co/edit/?p=preview';
+export const PLUNKER_FORM_URL: string = 'https://plnkr.co/edit/?p=preview';
 
 const CDN_BASE: string = 'https://unpkg.com/';
 
